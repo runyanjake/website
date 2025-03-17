@@ -1,27 +1,20 @@
 :root {
   /* Color System */
-  --color-primary: #1e88e5;
-  --color-primary-dark: #1565c0;
+  --color-primary: #323734;
+  --color-secondary: #1b3525;
+  --shadow-color: #010703;
+  --bg-primary: #96ba96;
+  --bg-secondary: #6ea16e;
   
   /* Text Colors */
-  --text-primary: #1a1a1a;
-  --text-secondary: #444444;
-  --text-muted: #666666;
   --text-light: #ffffff;
-  --text-link: var(--color-primary);
-  --text-link-hover: var(--color-primary-dark);
-  
-  /* Background Colors */
-  --bg-primary: #647c64;
-  --bg-secondary: #394a39;
-  --bg-dark: #1a1f1c;
-  --bg-error: #ffebee;
+  --text-dark: #000000;
+  --text-muted: #666666;
+  --text-link: var(--color-secondary);
+  --text-link-hover: var(--color-primary);
   
   /* Border Colors */
   --border-color-light: #eeeeee;
-  
-  /* UI Elements */
-  --shadow-color: rgba(0, 0, 0, 0.15);
   
   /* Status Colors */
   --error-color: #d32f2f;
