@@ -1,0 +1,54 @@
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.not-found-container h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.not-found-container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #666;
+}
+
+.not-found-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.not-found-links a {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #0066cc;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.not-found-links a:hover {
+  background-color: #0055aa;
+}
+
+.not-found-links .home-link {
+  background-color: #0066cc;
+}
+
+.not-found-links .blog-link {
+  background-color: #6600cc;
+}
+
+.not-found-links .friends-link {
+  background-color: #cc6600;
+} 

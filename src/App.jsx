@@ -7,6 +7,7 @@ import About from './routes/about';
 import Blog from './routes/blog';
 import Friends from './routes/friends';
 import Contact from './routes/contact';
+import NotFound from './routes/not-found';
 
 export default function App() {
   return (
@@ -17,7 +18,9 @@ export default function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:postId" element={<Blog />} />
         <Route path="/friends" element={<Friends />} />
+        <Route path="/friends/:friendId" element={<Friends />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

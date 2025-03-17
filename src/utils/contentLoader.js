@@ -88,7 +88,6 @@ export function useMarkdownContent(blogDirectory) {
               
               try {
                 const frontMatter = yaml.load(match[1]);
-                // Extract just the content, removing the front matter
                 const content = text.replace(frontMatterRegex, '').trim();
                 
                 // Format the date as a string if it's a Date object
@@ -97,15 +96,19 @@ export function useMarkdownContent(blogDirectory) {
                   ? dateValue.toISOString().split('T')[0] // Format as YYYY-MM-DD
                   : dateValue;
                 
-                // Generate a slug from the title if not provided
+                // Generate a slug from the title or name if not provided
+                const titleOrName = frontMatter.title || frontMatter.name;
                 const slug = frontMatter.slug || 
-                  (frontMatter.title ? frontMatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : id);
+                  (titleOrName ? titleOrName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : id);
                 
                 return {
                   id,
-                  title: frontMatter.title || `Untitled Post ${id}`,
-                  date: formattedDate || new Date().toISOString().split('T')[0],
+                  title: frontMatter.title,
+                  name: frontMatter.name,
+                  date: formattedDate,
                   author: frontMatter.author,
+                  website: frontMatter.website,
+                  image: frontMatter.image,
                   excerpt: frontMatter.excerpt || content.substring(0, 150) + '...',
                   content, // This should be just the markdown content, not including any file paths
                   slug,
