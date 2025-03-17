@@ -35,38 +35,50 @@ export default function Blog() {
   // Add some debugging to see what's happening
   console.log('Blog component state:', { posts, isLoading, error, postId });
 
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="blog-post-container">
+          <p>Loading blog posts...</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <MainLayout>
+        <div className="blog-post-container">
+          <p>Error loading blog posts: {error.message}</p>
+          <pre>{JSON.stringify(error, null, 2)}</pre>
+        </div>
+      </MainLayout>
+    );
+  }
+
   // Render a single post
   if (postId) {
-    if (isLoading) {
+    const currentPost = posts.find(post => post.slug === postId || post.id === postId);
+    
+    if (!currentPost) {
       return (
         <MainLayout>
           <div className="blog-post-container">
-            <p>Loading post...</p>
+            <h1>Post Not Found</h1>
+            <p>Sorry, the post you're looking for could not be found.</p>
           </div>
         </MainLayout>
       );
     }
-    
+
     return (
       <MainLayout>
         <div className="blog-post-container">
-          <MarkdownRenderer
-            blogDirectory={BLOG_CONTENT_PATH}
-            postId={postId}
-            renderPost={(post) => (
-              <BlogPost
-                title={post.title}
-                date={post.date}
-                author={post.author}
-                content={post.content}
-              />
-            )}
-            fallback={
-              <div>
-                <h1>Post Not Found</h1>
-                <p>Sorry, the post you're looking for could not be found.</p>
-              </div>
-            }
+          <BlogPost
+            title={currentPost.title}
+            date={currentPost.date}
+            author={currentPost.author}
+            content={currentPost.content}
           />
         </div>
       </MainLayout>
@@ -78,29 +90,16 @@ export default function Blog() {
     <MainLayout>
       <div className="blog-list-container">
         <h1>Blog</h1>
-        {isLoading ? (
-          <p>Loading blog posts...</p>
-        ) : error ? (
-          <div>
-            <p>Error loading blog posts: {error.message}</p>
-            <PostList posts={fallbackPosts} />
-          </div>
+        <MarkdownRenderer
+          contentPath={`${BLOG_CONTENT_PATH}/index.md`}
+          fallback={<p>Some ramblings on various topics, hope you enjoy!</p>}
+        />
+        {posts && posts.length > 0 ? (
+          <PostList posts={posts} />
         ) : (
-          <div>
-            {posts && posts.length > 0 ? (
-              <>
-                <MarkdownRenderer
-                  contentPath={`${BLOG_CONTENT_PATH}/index.md`}
-                  fallback={<p>Some ramblings on various topics, hope you enjoy!</p>}
-                />
-                <PostList posts={posts} />
-              </>
-            ) : (
-              <>
-                <p>No blog posts found. Try again later!</p>
-                <PostList posts={fallbackPosts} />
-              </>
-            )}
+          <div className="blog-error">
+            <p>No blog posts found. Check back later!</p>
+            <pre>{JSON.stringify({ posts, error, isLoading }, null, 2)}</pre>
           </div>
         )}
       </div>

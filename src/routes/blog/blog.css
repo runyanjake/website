@@ -1,71 +1,90 @@
 .blog-list-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spacing-xl);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .blog-post-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--spacing-xl);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.blog-error {
+  padding: var(--spacing-md);
+  background-color: var(--bg-error);
+  border-radius: var(--radius-sm);
+  color: var(--error-color);
+  margin-top: var(--spacing-md);
 }
 
 .post-list {
-  margin-top: 20px;
+  margin-top: var(--spacing-xl);
 }
 
 .post-preview {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-color-light);
 }
 
 .post-preview h2 {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
 }
 
 .post-preview h2 a {
-  color: #0066cc;
+  color: var(--text-link);
   text-decoration: none;
 }
 
 .post-preview h2 a:hover {
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 
 .post-meta {
   font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 10px;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-sm);
 }
 
 .post-excerpt {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
 }
 
 .read-more {
-  color: #0066cc;
+  color: var(--text-link);
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .read-more:hover {
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 
 .blog-post header {
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-xl);
 }
 
 .blog-post h1 {
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
 }
 
 .blog-post .post-meta {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .blog-post .post-content {
-  line-height: 1.6;
+  line-height: var(--line-height-relaxed);
+  color: var(--text-secondary);
 } 
