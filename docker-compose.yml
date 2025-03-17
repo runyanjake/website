@@ -1,12 +1,10 @@
-version: '3.8'
-
 networks:
   traefik:
     external: true
 
 services:
   react-app:
-    container_name: website
+    container_name: content-website
     build:
       context: .
       dockerfile: Dockerfile
