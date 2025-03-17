@@ -37,34 +37,49 @@ export function useMarkdownContent(blogDirectory) {
   useEffect(() => {
     async function loadPosts() {
       try {
-        console.log(`Loading posts from blog directory: ${blogDirectory}`);
+        console.log(`Loading posts from directory: ${blogDirectory}`);
         
-        // Read index.json to find blog posts to display.
+        // Read index.json to find posts to display.
         const directoryResponse = await fetch(`${blogDirectory}/index.json`);
         if (!directoryResponse.ok) {
-          throw new Error(`Failed to load blog index: ${directoryResponse.status}`);
+          throw new Error(`Failed to load index: ${directoryResponse.status}`);
         }
         
         const directoryData = await directoryResponse.json();
+        console.log('Index data:', directoryData);
         
-        if (!directoryData.files || !Array.isArray(directoryData.files)) {
-          throw new Error('Invalid blog index format');
+        // Check for either files or sectionFiles property
+        const fileList = directoryData.sectionFiles || directoryData.files;
+        
+        if (!fileList || !Array.isArray(fileList)) {
+          throw new Error('Invalid index format: missing files or sectionFiles array');
         }
         
-        const postsDirectory = `${blogDirectory}/posts`;
+        // Determine the correct directory for the files
+        let postsDirectory;
+        if (blogDirectory.endsWith('/sections')) {
+          // If we're in a sections directory, use it directly
+          postsDirectory = blogDirectory;
+        } else if (directoryData.sectionFiles) {
+          // If the index.json has a sectionFiles property, use the sections subdirectory
+          postsDirectory = `${blogDirectory}/sections`;
+        } else {
+          // Default to the posts subdirectory
+          postsDirectory = `${blogDirectory}/posts`;
+        }
+        console.log('Posts directory:', postsDirectory);
         
         const loadedPosts = await Promise.all(
-          directoryData.files.map(async (filename, index) => {
+          fileList.map(async (filename) => {
             try {
-              // Generate a stable ID from the index or filename
-              // This ID is just for internal reference and doesn't affect the URL
-              const id = `post-${index + 1}`;
-              const url = `${postsDirectory}/${filename}`;
+              // Generate a unique ID from the filename
+              const id = filename.replace(/\.[^/.]+$/, ""); // Remove file extension
               
-              const response = await fetch(url);
+              console.log(`Loading post: ${filename}, ID: ${id}`);
               
+              const response = await fetch(`${postsDirectory}/${filename}`);
               if (!response.ok) {
-                console.warn(`Failed to load post ${id}: ${response.status}`);
+                console.error(`Failed to load post ${filename}: ${response.status}`);
                 return null;
               }
               
@@ -75,19 +90,22 @@ export function useMarkdownContent(blogDirectory) {
               const match = text.match(frontMatterRegex);
               
               if (!match) {
-                console.warn(`No front matter found in post ${id}`);
+                console.warn(`No front matter found in post ${filename}`);
                 return {
                   id,
                   title: `Untitled Post ${id}`,
                   date: new Date().toISOString().split('T')[0],
                   excerpt: 'No excerpt available',
                   content: text,
-                  slug: id // Use the ID as the slug for URLs
+                  slug: id, // Use the ID as the slug for URLs
+                  filename
                 };
               }
               
               try {
                 const frontMatter = yaml.load(match[1]);
+                console.log(`Front matter for ${filename}:`, frontMatter);
+                
                 const content = text.replace(frontMatterRegex, '').trim();
                 
                 // Format the date as a string if it's a Date object
@@ -110,19 +128,21 @@ export function useMarkdownContent(blogDirectory) {
                   website: frontMatter.website,
                   image: frontMatter.image,
                   excerpt: frontMatter.excerpt || content.substring(0, 150) + '...',
-                  content, // This should be just the markdown content, not including any file paths
+                  content,
                   slug,
-                  filename
+                  filename,
+                  order: frontMatter.order
                 };
               } catch (yamlError) {
-                console.error(`Error parsing front matter for post ${id}:`, yamlError);
+                console.error(`Error parsing front matter for post ${filename}:`, yamlError);
                 return {
                   id,
-                  title: `Error in Post ${id}`,
+                  title: `Error in ${filename}`,
                   date: new Date().toISOString().split('T')[0],
                   excerpt: 'Error parsing post metadata',
                   content: text,
-                  slug: id
+                  slug: id,
+                  filename
                 };
               }
             } catch (fetchError) {
@@ -135,13 +155,20 @@ export function useMarkdownContent(blogDirectory) {
         // Filter out any null posts (failed to load)
         const filteredPosts = loadedPosts.filter(post => post !== null);
         
-        // Sort posts by date (newest first)
-        filteredPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Sort posts by date (newest first) or by order if available
+        filteredPosts.sort((a, b) => {
+          // If both posts have an order property, sort by order
+          if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+          }
+          // Otherwise sort by date
+          return new Date(b.date || 0) - new Date(a.date || 0);
+        });
         
         console.log(`Successfully loaded ${filteredPosts.length} posts`);
         setPosts(filteredPosts);
       } catch (err) {
-        console.error("Error loading blog posts:", err);
+        console.error("Error loading posts:", err);
         setError(err);
       } finally {
         setIsLoading(false);
