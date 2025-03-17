@@ -13,12 +13,18 @@ export default function About() {
   const { posts: sections, isLoading, error } = useMarkdownContent(ABOUT_CONTENT_PATH);
   const [activeSection, setActiveSection] = useState(sectionId || null);
   
-  // Add debugging to see what's happening
-  console.log('About component state:', { 
-    sections, 
-    isLoading, 
-    error, 
+  // Update activeSection when sectionId changes
+  useEffect(() => {
+    setActiveSection(sectionId || null);
+  }, [sectionId]);
+  
+  // Debug logging
+  console.log('About component state:', {
+    sections,
+    isLoading,
+    error,
     sectionId,
+    activeSection,
     aboutContentPath: ABOUT_CONTENT_PATH,
     sectionsDirectory: SECTIONS_DIRECTORY
   });
@@ -51,10 +57,6 @@ export default function About() {
       })
     : [];
 
-  const handleSectionClick = (section) => {
-    setActiveSection(section.slug || section.id);
-  };
-
   return (
     <MainLayout>
       <div className="about-container">
@@ -78,7 +80,7 @@ export default function About() {
                     <button
                       key={section.id}
                       className={`about-nav-item ${activeSection === (section.slug || section.id) ? 'active' : ''}`}
-                      onClick={() => handleSectionClick(section)}
+                      onClick={() => setActiveSection(section.slug || section.id)}
                     >
                       {section.title || section.id}
                     </button>
@@ -105,6 +107,7 @@ export default function About() {
                     <div className="about-all-sections">
                       {sortedSections.map(section => (
                         <div key={section.id} className="about-section-content" id={section.slug || section.id}>
+                          <h2>{section.title || section.id}</h2>
                           <MarkdownRenderer
                             contentPath={`${SECTIONS_DIRECTORY}/${section.filename}`}
                             fallback={<p>Section content not found.</p>}
@@ -116,7 +119,7 @@ export default function About() {
                 </div>
               </>
             ) : (
-              <div>
+              <div className="about-error">
                 <p>No sections found. Please check your content directory.</p>
                 <pre>
                   {JSON.stringify({ sections, error, isLoading, ABOUT_CONTENT_PATH }, null, 2)}

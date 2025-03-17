@@ -7,6 +7,10 @@
 .about-header {
   margin-bottom: 2rem;
   text-align: center;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .about-header h1 {
@@ -17,8 +21,11 @@
 
 .about-content {
   display: flex;
-  flex-direction: column;
   gap: 2rem;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 @media (min-width: 768px) {
@@ -28,34 +35,34 @@
 }
 
 .about-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 200px;
+  flex: 0 0 200px;
   position: sticky;
   top: 2rem;
   align-self: flex-start;
 }
 
 .about-nav-item {
+  display: block;
+  width: 100%;
   padding: 0.75rem 1rem;
-  background-color: #f5f5f5;
-  border: none;
-  border-radius: 4px;
+  margin-bottom: 0.5rem;
   text-align: left;
-  font-size: 1rem;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   cursor: pointer;
+  color: var(--text-primary);
   transition: all 0.2s;
 }
 
 .about-nav-item:hover {
-  background-color: #e0e0e0;
+  background-color: var(--background-secondary);
 }
 
 .about-nav-item.active {
-  background-color: #0066cc;
+  background-color: var(--button-color);
   color: white;
-  font-weight: 500;
+  border-color: var(--button-color);
 }
 
 .about-section {
@@ -63,6 +70,8 @@
 }
 
 .about-section-content {
+  color: var(--text-primary);
+  line-height: var(--line-height-relaxed);
   margin-bottom: 3rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid #eaeaea;
@@ -75,9 +84,8 @@
 }
 
 .about-section-content h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
 }
 
 .about-section-content h3 {
@@ -88,8 +96,6 @@
 }
 
 .about-section-content p {
-  line-height: 1.6;
-  color: #555;
   margin-bottom: 1rem;
 }
 
@@ -111,4 +117,22 @@
 .about-section-content em {
   font-style: italic;
   color: #666;
+}
+
+.about-error {
+  padding: 1rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+  color: #d32f2f;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+  }
+
+  .about-nav {
+    position: static;
+    margin-bottom: 2rem;
+  }
 } 
