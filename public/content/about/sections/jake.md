@@ -1,10 +1,10 @@
 ---
-title: Jake
+title: About Me
 order: 1
 ---
 
-## About Me
+I'm a Bay Area native currently living and working in the South Bay.
 
-I'm a lover of code, technology, and the outdoors. I work as a software engineer in platform infrastructure where I get to solve interesting problems in distributed systems and cloud computing. 
+I'm a lover of technology, my many side projects, and the outdoors. I currently work as a software engineer at [Egnyte](https://www.egnyte.com) on platform infrastructure, developing distributed microservices in the cloud. 
 
-Outside of work I enjoy homelabbing, biking, and travelling.
+In my personal life, I love cooking new things, improving at volleyball, basketball, soccer and cycling, & whatever else I am currently fixated on.
