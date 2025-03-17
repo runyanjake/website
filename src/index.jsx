@@ -1,6 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainLayout from './components/Layout/MainLayout';
+import './styles/variables.css';
+import './index.css';
 
 // Import route components
 import Home from './routes/home';
@@ -10,7 +12,8 @@ import Friends from './routes/friends';
 import Contact from './routes/contact';
 import NotFound from './routes/not-found';
 
-export default function App() {
+// App component (moved from App.jsx)
+function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -27,3 +30,10 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
+// Mount the app (existing index.jsx code)
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+); 
