@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/Layout/MainLayout';
 
 // Import route components
+import Home from './routes/home';
 import About from './routes/about';
 import Blog from './routes/blog';
 import Friends from './routes/friends';
@@ -23,16 +24,5 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  );
-}
-
-function Home() {
-  return (
-    <MainLayout>
-      <div className="home-page">
-        <h1>Welcome to the Home Page</h1>
-        <p>Navigate to different sections using the links above.</p>
-      </div>
-    </MainLayout>
   );
 }

@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useMarkdownContent } from '../../utils/contentLoader';
 import { marked } from 'marked';
 
+// Configure marked to customize rendering
+marked.use({
+  renderer: {
+    // Override the hr (horizontal rule) renderer to return empty string
+    hr() {
+      return '';
+    }
+  }
+});
+
 export default function MarkdownRenderer({ 
   contentPath,
   fallback = null,
@@ -51,7 +61,11 @@ export default function MarkdownRenderer({
           throw new Error(`Failed to load content: ${response.status}`);
         }
         const text = await response.text();
-        const html = marked(text);
+        
+        // Remove front matter before rendering
+        const cleanedText = text.replace(/^---\n[\s\S]*?\n---\n/, '');
+        
+        const html = marked(cleanedText);
         setContent(html);
       } catch (err) {
         console.error("Error loading markdown:", err);

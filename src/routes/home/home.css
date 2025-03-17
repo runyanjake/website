@@ -1,0 +1,48 @@
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.home-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.home-container h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.home-container p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.home-container ul {
+  margin-bottom: 1.5rem;
+}
+
+.home-container li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.home-container a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.home-container a:hover {
+  text-decoration: underline;
+}
+
+.home-fallback {
+  text-align: center;
+  padding: 3rem 1rem;
+} 
