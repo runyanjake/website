@@ -9,8 +9,6 @@ const ABOUT_CONTENT_PATH = '/content/about';
 export default function About() {
   const { posts: sections, isLoading, error } = useMarkdownContent(ABOUT_CONTENT_PATH);
 
-  console.log('About sections:', sections);
-
   if (isLoading) {
     return (
       <MainLayout>

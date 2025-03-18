@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import MarkdownRenderer from '../../../components/ContentRenderer/MarkdownRenderer';
 
 export default function BlogPost({ title, date, author, path, slug, fullView = false }) {
-  console.log('BlogPost', title, date, author, path, slug, fullView);
 
   // Format the date string
   const formattedDate = date instanceof Date 

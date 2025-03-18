@@ -17,7 +17,6 @@ export function useMarkdownContent(contentDirectory) {
 
         const indexResponse = await fetch(indexPath);
         if (!indexResponse.ok) {
-          console.log(indexResponse.json());
           throw new Error('Failed to load content index');
         }
         const { files } = await indexResponse.json();
@@ -29,7 +28,6 @@ export function useMarkdownContent(contentDirectory) {
           })
         );
 
-        console.log('Loaded posts:', loadedPosts);
         setPosts(loadedPosts);
       } catch (err) {
         setError(err);
@@ -77,7 +75,9 @@ export async function loadMarkdownFile(filePath) {
         ? attributes.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
         : filename;
     }
-    console.log('Metadata from Markdown File:', 'slug', slug, 'filename', filename, 'attributes', attributes);
+    
+    // This usually becomes relevant when we add a new section.
+    //console.log('Metadata from Markdown File:', 'slug', slug, 'filename', filename, 'attributes', attributes);
 
     return {
       ...attributes,

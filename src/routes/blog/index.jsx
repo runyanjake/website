@@ -29,8 +29,6 @@ export default function Blog() {
   const { postId } = useParams();
   const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH);
 
-  console.log('Blog posts:', posts);
-
   if (isLoading) {
     return (
       <MainLayout>
