@@ -1,55 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { marked } from 'marked';
+import MarkdownRenderer from '../../../components/ContentRenderer/MarkdownRenderer';
 
-export default function FriendCard({ name, website, image, content, fullView = false, linkTo }) {
-  // Convert markdown to HTML if content is a string
-  const htmlContent = typeof content === 'string' 
-    ? marked(content)
-    : content;
+export default function FriendCard({ title, website, image, slug, path, fullView = false }) {
 
-  return (
-    <div className={`friend-card ${fullView ? 'full-view' : ''}`}>
-      {/* If linkTo is provided and not in fullView, make the image clickable */}
-      {linkTo && !fullView ? (
-        <Link to={linkTo} className="friend-image-link">
-          <div className="friend-image">
-            <img src={image} alt={name} />
-          </div>
-        </Link>
-      ) : (
-        <div className="friend-image">
-          <img src={image} alt={name} />
-        </div>
-      )}
-      
-      <div className="friend-info">
-        {/* If linkTo is provided and not in fullView, make the name clickable */}
-        {linkTo && !fullView ? (
-          <h2>
-            <Link to={linkTo}>{name}</Link>
-          </h2>
-        ) : (
-          <h2>{name}</h2>
-        )}
-        
-        <a href={website} target="_blank" rel="noopener noreferrer" className="friend-website">
-          {website}
-        </a>
-        
-        <div className="friend-content">
-          {typeof htmlContent === 'string' 
-            ? <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-            : htmlContent}
-        </div>
-        
-        {/* Add a "Read more" link if not in fullView */}
-        {linkTo && !fullView && (
-          <Link to={linkTo} className="read-more">
-            Read more →
-          </Link>
-        )}
+  return fullView ? (
+    <div className="friend-card full-view">
+      <img src={image} alt={title} />
+      <h1>{title}</h1>
+      <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
+      <div className="friend-content">
+        <MarkdownRenderer contentPath={path} />
       </div>
+    </div>
+  ) : (
+    <div className="friend-card">
+      <Link to={`/friends/${slug}`}>
+        <img src={image} alt={title} />
+        <h2>{title}</h2>
+      </Link>
+      <a href={website} target="_blank" rel="noopener noreferrer">{website}</a>
     </div>
   );
 } 

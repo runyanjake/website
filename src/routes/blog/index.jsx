@@ -58,7 +58,7 @@ export default function Blog() {
 
   // Render a single post
   if (postId) {
-    const currentPost = posts.find(post => post.slug === postId || post.id === postId);
+    const currentPost = posts.find(post => post.slug === postId);
     
     if (!currentPost) {
       return (
@@ -92,6 +92,7 @@ export default function Blog() {
         <h1>Blog</h1>
         <MarkdownRenderer
           contentPath={`${BLOG_CONTENT_PATH}/index.md`}
+          contentType="default"
           fallback={<p>Some ramblings on various topics, hope you enjoy!</p>}
         />
         {posts && posts.length > 0 ? (

@@ -1,5 +1,5 @@
 ---
-name: Tyler K
+title: Tyler K
 website: https://tyler.kim  
 image: https://randomuser.me/api/portraits/men/3.jpg
 ---

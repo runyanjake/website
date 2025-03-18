@@ -1,5 +1,5 @@
 ---
-name: Naren D 
+title: Naren D 
 website: https://narendasan.com/
 image: https://randomuser.me/api/portraits/men/2.jpg
 ---

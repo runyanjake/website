@@ -1,105 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { useMarkdownContent } from '../../utils/contentLoader';
+import matter from 'front-matter';
 import { marked } from 'marked';
-import { loadMarkdownFile } from '../../utils/contentLoader';
 
-// Configure marked to customize rendering
-marked.use({
-  renderer: {
-    // Override the hr (horizontal rule) renderer to return empty string
-    hr() {
-      return '';
-    }
-  }
-});
-
-export default function MarkdownRenderer({ 
-  contentPath,
-  contentType = 'default',
-  fallback = null,
-  postId = null,
-  blogDirectory = null,
-  renderPost = null,
-  renderComponent = null
-}) {
-  const [content, setContent] = useState(null);
-  const [frontMatter, setFrontMatter] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+export default function MarkdownRenderer({ contentPath }) {
+  const [content, setContent] = useState('');
   const [error, setError] = useState(null);
-  
-  // If we're rendering a blog post and have a postId and directory
-  if (postId && blogDirectory && renderPost) {
-    // Use the useMarkdownContent hook to load posts
-    const { posts, isLoading: postsLoading, error: postsError } = useMarkdownContent(blogDirectory);
-    
-    // Find the current post
-    const currentPost = posts.find(post => post.id === postId || post.slug === postId);
-    
-    if (postsLoading) return <div>Loading content...</div>;
-    
-    if (postsError || !currentPost) {
-      console.error("Error loading post:", postsError);
-      return fallback || <div>Error loading content: {postsError?.message || "Post not found"}</div>;
-    }
-    
-    // Render the post using the provided render function
-    return renderPost({
-      ...currentPost,
-      // The content is already in markdown format, BlogPost will handle conversion
-      content: currentPost.content
-    });
-  }
-  
-  // Load content from path
+
   useEffect(() => {
     async function loadContent() {
-      if (!contentPath) {
-        setIsLoading(false);
-        return;
-      }
-      
       try {
-        const data = await loadMarkdownFile(contentPath, contentType);
-        setContent(data.content);
+        const response = await fetch(contentPath);
+        if (!response.ok) {
+          throw new Error(`Failed to load markdown: ${response.statusText}`);
+        }
         
-        // Remove content from the data object to get just front matter
-        const { content: _, ...frontMatterData } = data;
-        setFrontMatter(frontMatterData);
+        const text = await response.text();
+        const { body } = matter(text);  // Extract just the content after front matter
+        const htmlContent = marked(body); // Convert markdown to HTML
+        
+        setContent(htmlContent);
       } catch (err) {
         console.error('Error loading markdown:', err);
         setError(err);
-      } finally {
-        setIsLoading(false);
       }
     }
 
-    loadContent();
-  }, [contentPath, contentType]);
+    if (contentPath) {
+      loadContent();
+    }
+  }, [contentPath]);
 
-  if (isLoading) return <div>Loading content...</div>;
   if (error) {
-    console.error("Error loading markdown:", error);
-    return fallback || <div>Error loading content: {error.message}</div>;
+    return <div className="markdown-error">Error loading content: {error.message}</div>;
   }
 
-  if (!content) {
-    return fallback || <div>Loading...</div>;
-  }
-
-  // If a render component is provided, use it
-  if (renderComponent) {
-    // Make sure we're passing the HTML content, not the raw markdown
-    return renderComponent(content);
-  }
-
-  // Otherwise, render the content directly
   return (
     <div 
       className="markdown-content"
-      dangerouslySetInnerHTML={{ __html: content }} 
+      dangerouslySetInnerHTML={{ __html: content }}
     />
   );
 }
-
-// Add a way to access front matter if needed
-MarkdownRenderer.getFrontMatter = () => frontMatter; 

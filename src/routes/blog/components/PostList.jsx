@@ -9,21 +9,18 @@ export default function PostList({ posts }) {
   return (
     <div className="post-list">
       {posts.map(post => (
-        <div key={post.id} className="post-item">
+        <div key={post.path} className="post-preview">
           <h2>
-            <Link to={`/blog/${post.slug || post.id}`}>{post.title}</Link>
+            <Link to={`/blog/${post.slug}`}>
+              {post.title}
+            </Link>
           </h2>
           <div className="post-meta">
-            <span className="post-date">
-              {typeof post.date === 'object' && post.date instanceof Date 
-                ? post.date.toLocaleDateString() 
-                : post.date}
-            </span>
-            {post.author && <span className="post-author"> by {post.author}</span>}
+            <span>{post.date}</span>
+            {post.author && <span> • {post.author}</span>}
           </div>
-          <p className="post-excerpt">{post.excerpt}</p>
-          <Link to={`/blog/${post.slug || post.id}`} className="read-more">
-            Read more →
+          <Link to={`/blog/${post.slug}`} className="read-more">
+            Read more
           </Link>
         </div>
       ))}

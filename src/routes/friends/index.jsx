@@ -19,50 +19,56 @@ const fallbackFriends = [
 ];
 
 const FRIENDS_CONTENT_PATH = '/content/friends';
-const FRIENDS_DIRECTORY = `${FRIENDS_CONTENT_PATH}/posts`;
 
 export default function Friends() {
   const { friendId } = useParams();
-  
-  // Use the hook at the top level of the component
-  const { posts: friends, isLoading, error } = useMarkdownContent(FRIENDS_CONTENT_PATH, 'friends');
+  const { posts: friends, isLoading, error } = useMarkdownContent(FRIENDS_CONTENT_PATH);
 
-  // Add some debugging to see what's happening
-  console.log('Friends component state:', { friends, isLoading, error, friendId });
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="friend-container">
+          <p>Loading friends...</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <MainLayout>
+        <div className="friend-container">
+          <p>Error loading friends: {error.message}</p>
+        </div>
+      </MainLayout>
+    );
+  }
 
   // Render a single friend
   if (friendId) {
-    if (isLoading) {
+    const currentFriend = friends.find(friend => friend.slug === friendId);
+
+    if (!currentFriend) {
       return (
         <MainLayout>
           <div className="friend-container">
-            <p>Loading friend information...</p>
+            <h1>Friend Not Found</h1>
+            <p>Sorry, the friend you're looking for could not be found.</p>
           </div>
         </MainLayout>
       );
     }
-    
+
     return (
       <MainLayout>
         <div className="friend-container">
-          <MarkdownRenderer
-            blogDirectory={FRIENDS_CONTENT_PATH}
-            postId={friendId}
-            renderPost={(friend) => (
-              <FriendCard
-                name={friend.name}
-                website={friend.website}
-                image={friend.image}
-                content={friend.content}
-                fullView={true}
-              />
-            )}
-            fallback={
-              <div>
-                <h1>Friend Not Found</h1>
-                <p>Sorry, the friend you're looking for could not be found.</p>
-              </div>
-            }
+          <FriendCard
+            title={currentFriend.title}
+            website={currentFriend.website}
+            image={currentFriend.image}
+            path={currentFriend.path}
+            slug={currentFriend.slug}
+            fullView={true}
           />
         </div>
       </MainLayout>
@@ -74,29 +80,15 @@ export default function Friends() {
     <MainLayout>
       <div className="friends-list-container">
         <h1>Friends</h1>
-        {isLoading ? (
-          <p>Loading friends...</p>
-        ) : error ? (
-          <div>
-            <p>Error loading friends: {error.message}</p>
-            <FriendList friends={fallbackFriends} />
-          </div>
+        <MarkdownRenderer
+          contentPath={`${FRIENDS_CONTENT_PATH}/index.md`}
+          fallback={<p>Check out some of my amazing friends!</p>}
+        />
+        {friends && friends.length > 0 ? (
+          <FriendList friends={friends} />
         ) : (
-          <div>
-            {friends && friends.length > 0 ? (
-              <>
-                <MarkdownRenderer
-                  contentPath={`${FRIENDS_CONTENT_PATH}/index.md`}
-                  fallback={<p>Check out some of my amazing friends!</p>}
-                />
-                <FriendList friends={friends} />
-              </>
-            ) : (
-              <>
-                <p>No friends found. Try again later!</p>
-                <FriendList friends={fallbackFriends} />
-              </>
-            )}
+          <div className="friends-error">
+            <p>No friends found. Try again later!</p>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 ---
-title: LLM Pipeline with Rivet and LMStudio
+title: LLM Pipeline with Rivet and LLMStudio
 date: 2024-02-13
 author: Jake Runyan
 ---

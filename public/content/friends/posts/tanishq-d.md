@@ -1,5 +1,5 @@
 ---
-name: Tanishq D
+title: Tanishq D
 website: https://tanishqdubey.com
 image: https://randomuser.me/api/portraits/men/6.jpg
 ---
