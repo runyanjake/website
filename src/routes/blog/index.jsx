@@ -24,16 +24,12 @@ const fallbackPosts = [
 ];
 
 const BLOG_CONTENT_PATH = '/content/blog';
-const POSTS_DIRECTORY = `${BLOG_CONTENT_PATH}/posts`;
 
 export default function Blog() {
   const { postId } = useParams();
-  
-  // Use the hook at the top level of the component
-  const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH, 'blog');
+  const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH);
 
-  // Add some debugging to see what's happening
-  console.log('Blog component state:', { posts, isLoading, error, postId });
+  console.log('Blog posts:', posts);
 
   if (isLoading) {
     return (
@@ -50,7 +46,6 @@ export default function Blog() {
       <MainLayout>
         <div className="blog-post-container">
           <p>Error loading blog posts: {error.message}</p>
-          <pre>{JSON.stringify(error, null, 2)}</pre>
         </div>
       </MainLayout>
     );
@@ -78,7 +73,9 @@ export default function Blog() {
             title={currentPost.title}
             date={currentPost.date}
             author={currentPost.author}
-            content={currentPost.content}
+            path={currentPost.path}
+            slug={currentPost.slug}
+            fullView={true}
           />
         </div>
       </MainLayout>
@@ -92,7 +89,6 @@ export default function Blog() {
         <h1>Blog</h1>
         <MarkdownRenderer
           contentPath={`${BLOG_CONTENT_PATH}/index.md`}
-          contentType="default"
           fallback={<p>Some ramblings on various topics, hope you enjoy!</p>}
         />
         {posts && posts.length > 0 ? (
@@ -100,7 +96,6 @@ export default function Blog() {
         ) : (
           <div className="blog-error">
             <p>No blog posts found. Check back later!</p>
-            <pre>{JSON.stringify({ posts, error, isLoading }, null, 2)}</pre>
           </div>
         )}
       </div>

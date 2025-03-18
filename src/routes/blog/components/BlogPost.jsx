@@ -1,30 +1,35 @@
 import React from 'react';
-import { marked } from 'marked';
+import { Link } from 'react-router-dom';
+import MarkdownRenderer from '../../../components/ContentRenderer/MarkdownRenderer';
 
-export default function BlogPost({ title, date, author, content }) {
-  // Convert markdown to HTML if content is a string
-  const htmlContent = typeof content === 'string' 
-    ? marked(content)
-    : content;
+export default function BlogPost({ title, date, author, path, slug, fullView = false }) {
+  console.log('BlogPost', title, date, author, path, slug, fullView);
 
-  return (
-    <article className="blog-post">
-      <header>
-        <h1>{title}</h1>
-        <div className="post-meta">
-          <span className="post-date">
-            {typeof date === 'object' && date instanceof Date 
-              ? date.toLocaleDateString() 
-              : date}
-          </span>
-          {author && <span className="post-author"> by {author}</span>}
-        </div>
-      </header>
-      <div className="post-content">
-        {typeof htmlContent === 'string' 
-          ? <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-          : htmlContent}
+  // Format the date string
+  const formattedDate = date instanceof Date 
+    ? date.toLocaleDateString()
+    : new Date(date).toLocaleDateString();
+
+  return fullView ? (
+    <div className="blog-post full-view">
+      <h1>{title}</h1>
+      <div className="post-meta">
+        <span>{formattedDate}</span>
+        {author && <span> • {author}</span>}
       </div>
-    </article>
+      <div className="post-content">
+        <MarkdownRenderer contentPath={path} />
+      </div>
+    </div>
+  ) : (
+    <div className="blog-post preview">
+      <Link to={`/blog/${slug}`}>
+        <h2>{title}</h2>
+      </Link>
+      <div className="post-meta">
+        <span>{formattedDate}</span>
+        {author && <span> • {author}</span>}
+      </div>
+    </div>
   );
 } 

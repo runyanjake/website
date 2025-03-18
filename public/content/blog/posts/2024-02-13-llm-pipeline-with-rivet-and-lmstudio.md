@@ -4,9 +4,6 @@ date: 2024-02-13
 author: Jake Runyan
 ---
 
-
-# Building my LLM Pipeline
-
 Like so many others, I've recently delved into the wonderful world of Large Language Models (LLMs) and Generative AI, and more importantly, into the most recent of self-hostable resources from various researchers and fellow hobbyists.
 With both of these machine learning flavors spawning hordes of AI-driven startups as of late, I wanted to give things a shot on my own and see just how much tinkering is really needed to start producing something interesting.
 

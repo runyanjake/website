@@ -12,8 +12,12 @@ export function useMarkdownContent(contentDirectory) {
         setIsLoading(true);
         setError(null);
 
-        const indexResponse = await fetch(`${contentDirectory}/index.json`);
+
+        const indexPath = `${contentDirectory}/index.json`;
+
+        const indexResponse = await fetch(indexPath);
         if (!indexResponse.ok) {
+          console.log(indexResponse.json());
           throw new Error('Failed to load content index');
         }
         const { files } = await indexResponse.json();
@@ -25,6 +29,7 @@ export function useMarkdownContent(contentDirectory) {
           })
         );
 
+        console.log('Loaded posts:', loadedPosts);
         setPosts(loadedPosts);
       } catch (err) {
         setError(err);
@@ -50,21 +55,32 @@ export async function loadMarkdownFile(filePath) {
     
     if (!response.ok) {
       console.error('Failed to fetch:', filePath, 'Status:', response.status);
-      throw new Error(`Failed to load markdown file: ${response.statusText}`);
+      throw new Error(`Failed to load markdown file ${filePath}: ${response.statusText}`);
     }
     
     const text = await response.text();
     
-    // Use front-matter to parse the content, don't need the body as we'll look it up later.
+    // Use front-matter to parse the content
     const { attributes } = matter(text);
 
-    // Create slug from name
-    const slug = attributes.title
-      ? attributes.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-      : filePath.split('/').pop().replace('.md', '');
+    // Get filename without extension
+    const filename = filePath.split('/').pop().replace('.md', '');
+    
+    // Create slug based on filename pattern
+    let slug;
+    if (filename.match(/^\d{4}-\d{2}-\d{2}-/)) {
+      // For blog posts: remove date prefix and convert to slug
+      slug = filename.replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    } else {
+      // For other content: use title or filename
+      slug = attributes.title
+        ? attributes.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+        : filename;
+    }
+    console.log('Metadata from Markdown File:', 'slug', slug, 'filename', filename, 'attributes', attributes);
 
     return {
-      ...attributes, // Spread all front matter attributes directly
+      ...attributes,
       path: filePath,
       slug: slug
     };
