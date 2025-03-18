@@ -10,7 +10,7 @@ const SECTIONS_DIRECTORY = `${ABOUT_CONTENT_PATH}/sections`;
 
 export default function About() {
   const { sectionId } = useParams();
-  const { posts: sections, isLoading, error } = useMarkdownContent(ABOUT_CONTENT_PATH);
+  const { posts: sections, isLoading, error } = useMarkdownContent(SECTIONS_DIRECTORY, 'about');
   const [activeSection, setActiveSection] = useState(sectionId || null);
   
   // Update activeSection when sectionId changes

@@ -30,7 +30,7 @@ export default function Blog() {
   const { postId } = useParams();
   
   // Use the hook at the top level of the component
-  const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH);
+  const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH, 'blog');
 
   // Add some debugging to see what's happening
   console.log('Blog component state:', { posts, isLoading, error, postId });

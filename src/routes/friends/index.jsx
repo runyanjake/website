@@ -25,7 +25,7 @@ export default function Friends() {
   const { friendId } = useParams();
   
   // Use the hook at the top level of the component
-  const { posts: friends, isLoading, error } = useMarkdownContent(FRIENDS_CONTENT_PATH);
+  const { posts: friends, isLoading, error } = useMarkdownContent(FRIENDS_CONTENT_PATH, 'friends');
 
   // Add some debugging to see what's happening
   console.log('Friends component state:', { friends, isLoading, error, friendId });

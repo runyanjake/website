@@ -1,6 +1,33 @@
 import yaml from 'js-yaml';
 import { useEffect, useState } from 'react';
 
+// Define metadata extractors for different content types
+const metadataExtractors = {
+  friends: (data, path) => ({
+    path,
+    name: data.name || 'Unknown',
+    website: data.website || '',
+    image: data.image || '/default-avatar.png'
+  }),
+  blog: (data, path) => ({
+    path,
+    title: data.title || 'Untitled',
+    date: data.date || new Date().toISOString().split('T')[0],
+    author: data.author || 'Anonymous',
+    excerpt: data.excerpt || '',
+    slug: data.slug || path.split('/').pop().replace('.md', '')
+  }),
+  about: (data, path) => ({
+    path,
+    title: data.title || 'Untitled',
+    order: data.order || 0
+  }),
+  default: (data, path) => ({
+    path,
+    content: data.content || ''
+  })
+};
+
 export function useYamlContent(path) {
   const [content, setContent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +56,45 @@ export function useYamlContent(path) {
   return { content, isLoading, error };
 }
 
-export function useMarkdownContent(blogDirectory) {
+export async function loadMarkdownFile(filePath, contentType = 'default') {
+  try {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error(`Failed to load markdown file: ${response.statusText}`);
+    }
+    const text = await response.text();
+    
+    // Extract front matter using regex
+    const frontMatterRegex = /^---\n([\s\S]*?)\n---\n/;
+    const match = text.match(frontMatterRegex);
+    
+    let frontMatter = {};
+    let content = text;
+    
+    if (match) {
+      try {
+        frontMatter = yaml.load(match[1]);
+        content = text.replace(frontMatterRegex, '').trim();
+      } catch (yamlError) {
+        console.error('Error parsing front matter:', yamlError);
+      }
+    }
+
+    // Extract metadata based on content type
+    const extractMetadata = metadataExtractors[contentType] || metadataExtractors.default;
+    const metadata = extractMetadata(frontMatter, filePath);
+
+    return {
+      ...metadata,
+      content
+    };
+  } catch (error) {
+    console.error('Error loading markdown file:', error);
+    throw error;
+  }
+}
+
+export function useMarkdownContent(contentDirectory, contentType = 'default') {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,146 +102,33 @@ export function useMarkdownContent(blogDirectory) {
   useEffect(() => {
     async function loadPosts() {
       try {
-        console.log(`Loading posts from directory: ${blogDirectory}`);
-        
-        // Read index.json to find posts to display.
-        const directoryResponse = await fetch(`${blogDirectory}/index.json`);
-        if (!directoryResponse.ok) {
-          throw new Error(`Failed to load index: ${directoryResponse.status}`);
+        setIsLoading(true);
+        setError(null);
+
+        const indexResponse = await fetch(`${contentDirectory}/index.json`);
+        if (!indexResponse.ok) {
+          throw new Error('Failed to load content index');
         }
-        
-        const directoryData = await directoryResponse.json();
-        console.log('Index data:', directoryData);
-        
-        // Check for either files or sectionFiles property
-        const fileList = directoryData.sectionFiles || directoryData.files;
-        
-        if (!fileList || !Array.isArray(fileList)) {
-          throw new Error('Invalid index format: missing files or sectionFiles array');
-        }
-        
-        // Determine the correct directory for the files
-        let postsDirectory;
-        if (blogDirectory.endsWith('/sections')) {
-          // If we're in a sections directory, use it directly
-          postsDirectory = blogDirectory;
-        } else if (directoryData.sectionFiles) {
-          // If the index.json has a sectionFiles property, use the sections subdirectory
-          postsDirectory = `${blogDirectory}/sections`;
-        } else {
-          // Default to the posts subdirectory
-          postsDirectory = `${blogDirectory}/posts`;
-        }
-        console.log('Posts directory:', postsDirectory);
-        
+        const { files } = await indexResponse.json();
+
         const loadedPosts = await Promise.all(
-          fileList.map(async (filename) => {
-            try {
-              // Generate a unique ID from the filename
-              const id = filename.replace(/\.[^/.]+$/, ""); // Remove file extension
-              
-              console.log(`Loading post: ${filename}, ID: ${id}`);
-              
-              const response = await fetch(`${postsDirectory}/${filename}`);
-              if (!response.ok) {
-                console.error(`Failed to load post ${filename}: ${response.status}`);
-                return null;
-              }
-              
-              const text = await response.text();
-              
-              // Extract front matter (metadata) from markdown
-              const frontMatterRegex = /^---\n([\s\S]*?)\n---/;
-              const match = text.match(frontMatterRegex);
-              
-              if (!match) {
-                console.warn(`No front matter found in post ${filename}`);
-                return {
-                  id,
-                  title: `Untitled Post ${id}`,
-                  date: new Date().toISOString().split('T')[0],
-                  excerpt: 'No excerpt available',
-                  content: text,
-                  slug: id, // Use the ID as the slug for URLs
-                  filename
-                };
-              }
-              
-              try {
-                const frontMatter = yaml.load(match[1]);
-                console.log(`Front matter for ${filename}:`, frontMatter);
-                
-                const content = text.replace(frontMatterRegex, '').trim();
-                
-                // Format the date as a string if it's a Date object
-                const dateValue = frontMatter.date;
-                const formattedDate = dateValue instanceof Date 
-                  ? dateValue.toISOString().split('T')[0] // Format as YYYY-MM-DD
-                  : dateValue;
-                
-                // Generate a slug from the title or name if not provided
-                const titleOrName = frontMatter.title || frontMatter.name;
-                const slug = frontMatter.slug || 
-                  (titleOrName ? titleOrName.toLowerCase().replace(/[^a-z0-9]+/g, '-') : id);
-                
-                return {
-                  id,
-                  title: frontMatter.title,
-                  name: frontMatter.name,
-                  date: formattedDate,
-                  author: frontMatter.author,
-                  website: frontMatter.website,
-                  image: frontMatter.image,
-                  excerpt: frontMatter.excerpt || content.substring(0, 150) + '...',
-                  content,
-                  slug,
-                  filename,
-                  order: frontMatter.order
-                };
-              } catch (yamlError) {
-                console.error(`Error parsing front matter for post ${filename}:`, yamlError);
-                return {
-                  id,
-                  title: `Error in ${filename}`,
-                  date: new Date().toISOString().split('T')[0],
-                  excerpt: 'Error parsing post metadata',
-                  content: text,
-                  slug: id,
-                  filename
-                };
-              }
-            } catch (fetchError) {
-              console.error(`Error fetching post ${filename}:`, fetchError);
-              return null;
-            }
+          files.map(async (filename) => {
+            const filePath = `${contentDirectory}/posts/${filename}`;
+            return await loadMarkdownFile(filePath, contentType);
           })
         );
-        
-        // Filter out any null posts (failed to load)
-        const filteredPosts = loadedPosts.filter(post => post !== null);
-        
-        // Sort posts by date (newest first) or by order if available
-        filteredPosts.sort((a, b) => {
-          // If both posts have an order property, sort by order
-          if (a.order !== undefined && b.order !== undefined) {
-            return a.order - b.order;
-          }
-          // Otherwise sort by date
-          return new Date(b.date || 0) - new Date(a.date || 0);
-        });
-        
-        console.log(`Successfully loaded ${filteredPosts.length} posts`);
-        setPosts(filteredPosts);
+
+        setPosts(loadedPosts);
       } catch (err) {
-        console.error("Error loading posts:", err);
         setError(err);
+        console.error('Error loading content:', err);
       } finally {
         setIsLoading(false);
       }
     }
 
     loadPosts();
-  }, [blogDirectory]);
+  }, [contentDirectory, contentType]);
 
   return { posts, isLoading, error };
 } 

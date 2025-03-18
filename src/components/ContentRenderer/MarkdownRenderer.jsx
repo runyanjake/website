@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMarkdownContent } from '../../utils/contentLoader';
 import { marked } from 'marked';
+import { loadMarkdownFile } from '../../utils/contentLoader';
 
 // Configure marked to customize rendering
 marked.use({
@@ -14,6 +15,7 @@ marked.use({
 
 export default function MarkdownRenderer({ 
   contentPath,
+  contentType = 'default',
   fallback = null,
   postId = null,
   blogDirectory = null,
@@ -21,6 +23,7 @@ export default function MarkdownRenderer({
   renderComponent = null
 }) {
   const [content, setContent] = useState(null);
+  const [frontMatter, setFrontMatter] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -56,19 +59,14 @@ export default function MarkdownRenderer({
       }
       
       try {
-        const response = await fetch(contentPath);
-        if (!response.ok) {
-          throw new Error(`Failed to load content: ${response.status}`);
-        }
-        const text = await response.text();
+        const data = await loadMarkdownFile(contentPath, contentType);
+        setContent(data.content);
         
-        // Remove front matter before rendering
-        const cleanedText = text.replace(/^---\n[\s\S]*?\n---\n/, '');
-        
-        const html = marked(cleanedText);
-        setContent(html);
+        // Remove content from the data object to get just front matter
+        const { content: _, ...frontMatterData } = data;
+        setFrontMatter(frontMatterData);
       } catch (err) {
-        console.error("Error loading markdown:", err);
+        console.error('Error loading markdown:', err);
         setError(err);
       } finally {
         setIsLoading(false);
@@ -76,12 +74,16 @@ export default function MarkdownRenderer({
     }
 
     loadContent();
-  }, [contentPath]);
+  }, [contentPath, contentType]);
 
   if (isLoading) return <div>Loading content...</div>;
   if (error) {
     console.error("Error loading markdown:", error);
     return fallback || <div>Error loading content: {error.message}</div>;
+  }
+
+  if (!content) {
+    return fallback || <div>Loading...</div>;
   }
 
   // If a render component is provided, use it
@@ -97,4 +99,7 @@ export default function MarkdownRenderer({
       dangerouslySetInnerHTML={{ __html: content }} 
     />
   );
-} 
+}
+
+// Add a way to access front matter if needed
+MarkdownRenderer.getFrontMatter = () => frontMatter; 

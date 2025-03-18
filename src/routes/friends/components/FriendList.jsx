@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import FriendCard from './FriendCard';
 
 export default function FriendList({ friends }) {
   if (!friends || friends.length === 0) {
@@ -10,15 +9,17 @@ export default function FriendList({ friends }) {
   return (
     <div className="friends-grid">
       {friends.map(friend => (
-        <div key={friend.id} className="friend-item">
-          <FriendCard
-            name={friend.name}
-            website={friend.website}
-            image={friend.image}
-            content={friend.excerpt}
-            linkTo={`/friends/${friend.slug || friend.id}`}
-          />
-        </div>
+        <Link 
+          key={friend.path}
+          to={`/friends/${friend.path.split('/').pop().replace('.md', '')}`}
+          className="friend-link"
+        >
+          <div className="friend-card">
+            <img src={friend.image} alt={friend.name} />
+            <h2>{friend.name}</h2>
+            <p>{friend.website}</p>
+          </div>
+        </Link>
       ))}
     </div>
   );
