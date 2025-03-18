@@ -65,7 +65,57 @@
 }
 
 .about-section {
-  flex: 1;
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.section-header:hover {
+  background-color: var(--color-primary-light);
+  color: var(--text-dark);
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: var(--text-lg);
+  color: var(--text-dark);
+}
+
+.expand-icon {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.expand-icon.expanded {
+  transform: rotate(0deg);
+  color: var(--color-primary);
+}
+
+.section-content {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--border-color-light);
+  color: var(--text-dark);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Accessibility */
+.section-header:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
 }
 
 .about-section-content {
