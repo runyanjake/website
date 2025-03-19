@@ -30,12 +30,12 @@ the best response times on the 1.5b model, and for some easier tasks the correct
 I particularly liked the features of OpenWebUI to allow for web search, which from initial testing seemed to find good results to build
 context of the response with.
 
-![img alt](./web-search.png)
+![img alt](https://images.whitney.rip/api/assets/b5817baf-631e-4fa0-a456-8c45f0dd93d0/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=5Hts56p%2B%2BrreaZ3B2WXOaHSF%2BeI%3D)
 
 Some responses with web search are a little on the nose with the smaller models, for example a search about me gives results that are pulled 
 verbatim from my github profile and websites.
 
-![img alt](./jake.png)
+![img alt](https://images.whitney.rip/api/assets/3db55a71-22f8-41b4-8972-d03c26dd60ce/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=047IZ6LxmjRH52yZJWg5g%2BmoqJ0%3D)
 
 I'm still actively using chatgpt, claude, and others for coding work, but as local LLMs improve you can bet I'll be keeping up to date with this stack. 
 

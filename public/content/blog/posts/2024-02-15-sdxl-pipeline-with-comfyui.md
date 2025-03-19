@@ -16,7 +16,7 @@ Here's how I work with it.
 
 2. In the ComfyUI folder, for Windows machines with Nvidia GPUs, run `run_nvidia_gpu.bat`. It starts a default project.
 
-![img alt](./blank_comfyui.png)
+![img alt](https://images.whitney.rip/api/assets/7f434dc2-ba73-4bcb-86d4-9972fb997666/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=dEGtrzVWoEsC6kM27Pz1k%2FDDpmo%3D)
 
 3. That's it! All further configuration depends on what you're plugging into it. 
 
@@ -44,11 +44,11 @@ The base SDXL workflow ([Base SDXL + Refiner](https://comfyanonymous.github.io/C
 Fun fact, the images on the home page of this website were generated using this workflow, specifying just positive and negative prompts!
 After image generation they were passed through [Adobe's SVG conversion tool](https://new.express.adobe.com/tools/convert-to-svg). 
 
-![img alt](@site/static/img/software_engineer.svg)
+![img alt](https://images.whitney.rip/api/assets/4884d13d-0fec-4adc-ae30-903236b86fcc/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=uXD6FsRy%2BbpGTex9yrpb3d0bhAE%3D)
 
-![img alt](@site/static/img/homelabber.svg)
+![img alt](https://images.whitney.rip/api/assets/7118cfb9-2835-4043-9d78-de40efffa110/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=pZcs3UPBdGXmZyN66PZjjzkjUOs%3D)
 
-![img alt](@site/static/img/learner.svg)
+![img alt](https://images.whitney.rip/api/assets/e9beccc2-6c31-4d82-a5f6-a603ef341098/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=YtuWC%2BWxOJ1WBbLf%2FMvioPnLXhE%3D)
 
 
 2. Text to Image to Video
@@ -58,7 +58,7 @@ The image to video is best suited for photoreal images but does give us a little
 
 [CivitAi Link](https://civitai.com/models/298774/valentines-cards-xl-concept)
 
-![img alt](./text_to_image_to_video.png)
+![img alt](https://images.whitney.rip/api/assets/35d154f8-85d1-4557-aa27-0f2c9acdf6b7/thumbnail?size=preview&key=--mO7kUUzkeGbsE8f6bJKWg-toGLQWh_ZZRxqkUIQxYQlSfDu92Or2l1rF1ASwNx_Vw&c=fBXIF5QolBsjPhkVw87cj3vPqmw%3D)
 
 
 ## Resources
