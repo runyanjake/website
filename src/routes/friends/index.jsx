@@ -4,17 +4,16 @@ import MainLayout from '../../components/Layout/MainLayout';
 import MarkdownRenderer from '../../components/ContentRenderer/MarkdownRenderer';
 import FriendList from './components/FriendList';
 import FriendCard from './components/FriendCard';
-import { useMarkdownContent } from '../../utils/contentLoader';
+import { loadContentFromDirectory } from '../../utils/contentLoader';
 import './friends.css';
 
-// Fallback data in case content loading fails
 const fallbackFriends = [
   {
-    id: 'friend-1',
-    name: 'Missing Friend',
-    website: '#',
+    id: 'missing-friend',
+    name: 'John Doe',
+    website: 'https://www.google.com/search?q=john+doe',
     image: 'https://via.placeholder.com/150',
-    excerpt: 'Friend information could not be loaded.'
+    excerpt: 'Who is this guy?'
   }
 ];
 
@@ -22,7 +21,7 @@ const FRIENDS_CONTENT_PATH = '/content/friends';
 
 export default function Friends() {
   const { friendId } = useParams();
-  const { posts: friends, isLoading, error } = useMarkdownContent(FRIENDS_CONTENT_PATH);
+  const { posts: friends, isLoading, error } = loadContentFromDirectory(FRIENDS_CONTENT_PATH);
 
   if (isLoading) {
     return (

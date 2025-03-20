@@ -4,7 +4,7 @@ import MainLayout from '../../components/Layout/MainLayout';
 import MarkdownRenderer from '../../components/ContentRenderer/MarkdownRenderer';
 import PostList from './components/PostList';
 import BlogPost from './components/BlogPost';
-import { useMarkdownContent } from '../../utils/contentLoader';
+import { loadContentFromDirectory } from '../../utils/contentLoader';
 import './blog.css';
 
 // Fallback data in case content loading fails
@@ -27,7 +27,7 @@ const BLOG_CONTENT_PATH = '/content/blog';
 
 export default function Blog() {
   const { postId } = useParams();
-  const { posts, isLoading, error } = useMarkdownContent(BLOG_CONTENT_PATH);
+  const { posts, isLoading, error } = loadContentFromDirectory(BLOG_CONTENT_PATH);
 
   if (isLoading) {
     return (

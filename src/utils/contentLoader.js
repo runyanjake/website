@@ -1,7 +1,21 @@
 import matter from 'front-matter';
 import { useEffect, useState } from 'react';
 
-export function useMarkdownContent(contentDirectory) {
+
+/*
+ * Processes Markdown content in a given directory.
+ * Searches the directory for index.json, which contains a map of the "active" posts:
+ *   {
+ *     "files": [
+ *       "jake.md",
+ *       "pws.md",
+ *       "jakeswestcoast.md"
+ *     ]
+ *   }
+ * It then parses the "front matter" from each file which contains attributes used for generating urls/page rendering.
+ * Returns a list of post objects, which contain metadata as well as location of markdown file to be rendered.
+ */
+export function loadContentFromDirectory(contentDirectory) {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +38,7 @@ export function useMarkdownContent(contentDirectory) {
         const loadedPosts = await Promise.all(
           files.map(async (filename) => {
             const filePath = `${contentDirectory}/posts/${filename}`;
-            return await loadMarkdownFile(filePath);
+            return await parseFrontMatter(filePath);
           })
         );
 
@@ -43,40 +57,39 @@ export function useMarkdownContent(contentDirectory) {
   return { posts, isLoading, error };
 }
 
-export async function loadMarkdownFile(filePath) {
+/*
+ * Given a file path, reads the front matter from the file.
+ * Returns a dict of attributes that were specified in the front matter.
+ * File Path and slug (created from the file name) are included in this dict by default.
+ */
+export async function parseFrontMatter(filePath) {
   try {
     const response = await fetch(filePath, {
       headers: {
         'Accept': 'text/markdown,text/plain'
       }
     });
-    
+
     if (!response.ok) {
       console.error('Failed to fetch:', filePath, 'Status:', response.status);
       throw new Error(`Failed to load markdown file ${filePath}: ${response.statusText}`);
     }
-    
-    const text = await response.text();
-    
-    // Use front-matter to parse the content
-    const { attributes } = matter(text);
 
-    // Get filename without extension
+    const text = await response.text();
+    const { attributes } = matter(text); //Throw away body for now.
     const filename = filePath.split('/').pop().replace('.md', '');
-    
-    // Create slug based on filename pattern
+
+    // Create slug
     let slug;
     if (filename.match(/^\d{4}-\d{2}-\d{2}-/)) {
-      // For blog posts: remove date prefix and convert to slug
       slug = filename.replace(/^\d{4}-\d{2}-\d{2}-/, '');
     } else {
-      // For other content: use title or filename
       slug = attributes.title
         ? attributes.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
         : filename;
     }
-    
-    // This usually becomes relevant when we add a new section.
+
+    // This usually becomes relevant debugging a new section.
     //console.log('Metadata from Markdown File:', 'slug', slug, 'filename', filename, 'attributes', attributes);
 
     return {

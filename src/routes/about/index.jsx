@@ -1,13 +1,13 @@
 import React from 'react';
 import MainLayout from '../../components/Layout/MainLayout';
 import SectionList from './components/SectionList';
-import { useMarkdownContent } from '../../utils/contentLoader';
+import { loadContentFromDirectory } from '../../utils/contentLoader';
 import './about.css';
 
 const ABOUT_CONTENT_PATH = '/content/about';
 
 export default function About() {
-  const { posts: sections, isLoading, error } = useMarkdownContent(ABOUT_CONTENT_PATH);
+  const { posts: sections, isLoading, error } = loadContentFromDirectory(ABOUT_CONTENT_PATH);
 
   if (isLoading) {
     return (

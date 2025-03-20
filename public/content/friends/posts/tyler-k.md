@@ -4,5 +4,5 @@ website: https://tyler.kim
 image: https://randomuser.me/api/portraits/men/3.jpg
 ---
 
-Tyler owns a Leica and that's all you need to know. One day his photos will be available on his website. :eyes:
+Tyler Kim is an individual who shares insights and reflections through his personal blog. His posts cover a range of topics, from personal experiences to musings on life and professional challenges. Tyler's writing offers a candid perspective on navigating different aspects of life, with a focus on growth and introspection. 
 

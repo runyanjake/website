@@ -10,5 +10,5 @@ The v1 implementation of PWS was named Whitney, after the mountain in California
 Olomana, the web server, is a significant upgrade over its predecessor. I've built it as a 4U rack-mounted machine with modern components. It's now mounted in a 16U rack, with a UPS and mesh network node close by. Critical resources like RAM and CPU cores are now a little more abundant, and I've set up the ZFS filesystem to provide redundancy against the power outages that occasionally would corrupt drive on the original PWS.
 I'm super happy with the rebuild, and would encourage anyone with similar interests to jump in and give homelabbing a try for themselves.
 
-See more on [[Github](https://github.com/runyanjake/olomana)].
+See more on [Github](https://github.com/runyanjake/olomana).
 
