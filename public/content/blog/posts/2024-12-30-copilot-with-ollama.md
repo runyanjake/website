@@ -9,7 +9,7 @@ for the companion, among a few others. Its free tier worked well, and you could 
 out of the tool. However they started to patch some of these holes, and I had to look for a fully self hosted solution, as the pricing model for a personal use coding 
 companion is, in my opionion, a little steep.
 
-# Self host it!
+## Self host it!
 Hosting LLMs via LM Studio or Ollama are pretty good ways to make this project happen. Since I've used LM Studio enough before, I used Ollama to self host my LLM.
 
 Various VSCode plugins are built for self-hosted LLMs, and it's pretty simple to mix and match. In this experiment I'll try a few tools: [LLama Coder](https://marketplace.visualstudio.com/items?itemName=ex3ndr.llama-coder), 
@@ -34,7 +34,7 @@ curl http://localhost:11434/api/generate -d '{
 ```
 Packages for Ollama are available in most programming languages if you want to use the OpenAI sytle api programmatically.
 
-# LLama Coder Plugin
+## LLama Coder Plugin
 The Llama Code plugin is able to do tab complete via your local LLM. Luckily it expects a default Ollama setup, which we just configured.
 All we need is the `ollama` cli installed and it should be able to detect it once we install the extension.
 
@@ -44,7 +44,7 @@ Next we'll visit the plugin page, click on the settings wheel, and select Settin
 ## Usage
 When writing code, after a space bar press and time waits, the LLM will be fed with the context and a suggestion will be given.
 
-# Aider-composer
+## Aider-composer
 This plugin supposedly allows for composer like features (code diff that you can apply/reject).
 
 ## Setup 

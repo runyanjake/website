@@ -5,11 +5,13 @@ author: Jake Runyan
 ---
 
 Like so many others, I've recently delved into the wonderful world of Large Language Models (LLMs) and Generative AI, and more importantly, into the most recent of self-hostable resources from various researchers and fellow hobbyists.
+
 With both of these machine learning flavors spawning hordes of AI-driven startups as of late, I wanted to give things a shot on my own and see just how much tinkering is really needed to start producing something interesting.
 
 I bring with me the concept of workflow being one of the most important factors of productivity. If the software devlopment process isn't streamlined, or your record->edit->upload pipeline for content creation has bottlenecks, your productivity takes a big hit.
 The same is true here, so this is why I've looked through FOSS projects for a good way to build myself an LLM pipeline.
 
+## What do we want?
 
 An ideal pipeline for me allows me to
 - switch the models in use on demand
