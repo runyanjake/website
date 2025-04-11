@@ -1,7 +1,12 @@
 .about-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
   padding: var(--spacing-xl);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .about-header {
@@ -69,8 +74,9 @@
   margin-bottom: var(--spacing-md);
   border: 1px solid var(--border-color-light);
   border-radius: var(--radius-md);
-  background-color: var(--bg-primary);
-  box-shadow: 0 2px 4px var(--shadow-color);
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-header {
@@ -80,8 +86,8 @@
   padding: var(--spacing-md);
   cursor: pointer;
   background-color: var(--bg-secondary);
-  transition: background-color 0.2s, color 0.2s;
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-header:hover {
@@ -109,8 +115,28 @@
 .section-content {
   padding: var(--spacing-md);
   border-top: 1px solid var(--border-color-light);
-  color: var(--text-dark);
-  line-height: var(--line-height-relaxed);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure content inside sections doesn't overflow */
+.section-content img,
+.section-content pre,
+.section-content table {
+  max-width: 100%;
+  height: auto;
+}
+
+.section-content pre,
+.section-content code {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.section-content table {
+  display: block;
+  overflow-x: auto;
 }
 
 /* Accessibility */
