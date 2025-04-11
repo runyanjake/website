@@ -4,7 +4,7 @@ networks:
 
 services:
   react-app:
-    container_name: content-website
+    container_name: jake-website
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
     networks:
       - traefik
     labels:
-      - traefik.http.routers.content-website.rule=Host(`content.whitney.rip`)
+      - traefik.http.routers.content-website.rule=Host(`jake.runyan.dev`)
       - traefik.http.routers.content-website.tls=true
       - traefik.http.routers.content-website.tls.certresolver=lets-encrypt
       - traefik.http.services.content-website.loadbalancer.server.port=80
