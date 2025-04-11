@@ -19,6 +19,6 @@ npm run dev
 
 ### Docker
 ```
-docker compose down && docker system prune -af && docker compose build && docker compose up -d && docker logs -f jake-website
+docker compose down && docker system prune && docker compose build && docker compose up -d && docker logs -f jake-website
 ```
 
