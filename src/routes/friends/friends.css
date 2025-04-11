@@ -25,6 +25,7 @@
 
 .friend-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 .friend-card h2 {
@@ -70,7 +71,7 @@
 }
 
 .friend-card .friend-links a:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary);
   color: var(--text-light);
   text-decoration: none;
 }
@@ -101,6 +102,7 @@
 }
 
 .friend-info h2 a:hover {
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 
@@ -112,6 +114,7 @@
 }
 
 .read-more:hover {
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 

@@ -38,7 +38,7 @@
 }
 
 .not-found-links a:hover {
-  background-color: #0055aa;
+  background-color: var(--color-primary);
 }
 
 .not-found-links .home-link {
@@ -51,4 +51,17 @@
 
 .not-found-links .friends-link {
   background-color: #cc6600;
+}
+
+/* Keep the specific colors for each link type but darken them on hover */
+.not-found-links .home-link:hover {
+  background-color: #005ab3; /* Darker version of original */
+}
+
+.not-found-links .blog-link:hover {
+  background-color: #5500b3; /* Darker version of original */
+}
+
+.not-found-links .friends-link:hover {
+  background-color: #b35500; /* Darker version of original */
 } 

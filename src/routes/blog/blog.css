@@ -45,7 +45,7 @@
 }
 
 .post-preview h2 a:hover {
-  color: var(--color-secondary);
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .read-more:hover {
-  color: var(--color-primary);
+  color: var(--text-link-hover);
   text-decoration: underline;
 }
 
