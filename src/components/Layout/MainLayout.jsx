@@ -6,7 +6,7 @@ export default function MainLayout({ children }) {
     <div className="main-layout">
       <header>
         <nav>
-          <ul style={{ display: 'flex', listStyle: 'none', gap: '20px' }}>
+          <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
             <li><Link to="/blog">Blog</Link></li>
@@ -16,7 +16,7 @@ export default function MainLayout({ children }) {
         </nav>
       </header>
       
-      <main>
+      <main className="page-container">
         {children}
       </main>
       

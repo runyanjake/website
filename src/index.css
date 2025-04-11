@@ -81,12 +81,14 @@ header {
   background-color: var(--bg-dark);
   color: var(--text-light);
   padding: var(--spacing-md) 0;
+  width: 100%;
 }
 
 header nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  display: flex;
+  justify-content: flex-start;
 }
 
 header nav ul {
@@ -95,6 +97,7 @@ header nav ul {
   gap: var(--spacing-xl);
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 header nav a {
@@ -118,4 +121,11 @@ footer {
   color: var(--text-light);
   text-align: center;
   padding: var(--spacing-md) 0;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
 }

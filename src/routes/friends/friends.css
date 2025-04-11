@@ -40,7 +40,6 @@
 
 .friend-card a {
   color: var(--text-link);
-  text-decoration: none;
 }
 
 .friend-card a:hover {
@@ -76,17 +75,12 @@
   text-decoration: none;
 }
 
-.friend-container {
-  padding: 2rem;
-}
-
-.friends-list-container {
+.friend-container, .friends-list-container {
   padding: 2rem;
 }
 
 .friends-list-container h1 {
   margin-bottom: 1rem;
-  color: #333;
 }
 
 /* Add styles for the new structure */

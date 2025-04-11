@@ -1,4 +1,4 @@
-.blog-list-container {
+.blog-list-container, .blog-post-container {
   max-width: 800px;
   margin: 0 auto;
   padding: var(--spacing-xl);
@@ -6,15 +6,6 @@
   border-radius: var(--radius-md);
   box-shadow: 0 2px 4px var(--shadow-color);
   color: var(--text-primary);
-}
-
-.blog-post-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing-xl);
-  background-color: var(--bg-primary);
-  border-radius: var(--radius-md);
-  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .blog-error {

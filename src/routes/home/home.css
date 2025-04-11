@@ -1,7 +1,8 @@
 .home-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--spacing-xl);
+  text-align: center;
 }
 
 .home-container h1 {
@@ -26,6 +27,9 @@
 
 .home-container ul {
   margin-bottom: 1.5rem;
+  /* Make lists display properly with centered text */
+  display: inline-block;
+  text-align: left;
 }
 
 .home-container li {
