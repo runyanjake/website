@@ -32,7 +32,7 @@ export default function Blog() {
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="blog-post-container">
+        <div className="section-content">
           <p>Loading blog posts...</p>
         </div>
       </MainLayout>
@@ -42,23 +42,27 @@ export default function Blog() {
   if (error) {
     return (
       <MainLayout>
-        <div className="blog-post-container">
-          <p>Error loading blog posts: {error.message}</p>
+        <div className="section-content">
+          <div className="error-message">
+            <p>Error loading blog posts: {error.message}</p>
+          </div>
         </div>
       </MainLayout>
     );
   }
 
-  // Render a single post
+  // If a specific post is requested
   if (postId) {
     const currentPost = posts.find(post => post.slug === postId);
     
     if (!currentPost) {
       return (
         <MainLayout>
-          <div className="blog-post-container">
-            <h1>Post Not Found</h1>
-            <p>Sorry, the post you're looking for could not be found.</p>
+          <div className="section-content">
+            <div className="error-message">
+              <h1>Post Not Found</h1>
+              <p>Sorry, the blog post you're looking for doesn't exist.</p>
+            </div>
           </div>
         </MainLayout>
       );
@@ -66,7 +70,7 @@ export default function Blog() {
 
     return (
       <MainLayout>
-        <div className="blog-post-container">
+        <div className="section-content">
           <BlogPost
             title={currentPost.title}
             date={currentPost.date}
@@ -83,7 +87,7 @@ export default function Blog() {
   // Render the blog index
   return (
     <MainLayout>
-      <div className="blog-list-container">
+      <div className="section-content">
         <h1>Blog</h1>
         <MarkdownRenderer
           contentPath={`${BLOG_CONTENT_PATH}/index.md`}
@@ -92,7 +96,7 @@ export default function Blog() {
         {posts && posts.length > 0 ? (
           <PostList posts={posts} />
         ) : (
-          <div className="blog-error">
+          <div className="error-message">
             <p>No blog posts found. Check back later!</p>
           </div>
         )}
