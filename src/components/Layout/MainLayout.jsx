@@ -23,13 +23,11 @@ export default function MainLayout({ children }) {
         <div className="container">
           {children}
         </div>
-      </main>
-      
-      <footer className="site-footer">
-        <div className="container">
+        
+        <footer className="site-footer">
           <p>© {new Date().getFullYear()} Jake Runyan</p>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </div>
   );
 } 

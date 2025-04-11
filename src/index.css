@@ -64,6 +64,10 @@ button:focus-visible {
   box-shadow: 0 2px 4px var(--shadow-color);
   padding: var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 @media (prefers-color-scheme: light) {
