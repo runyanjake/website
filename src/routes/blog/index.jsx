@@ -84,6 +84,9 @@ export default function Blog() {
     );
   }
 
+  // Sort posts in reverse chronological order
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
   // Render the blog index
   return (
     <MainLayout>
@@ -93,8 +96,8 @@ export default function Blog() {
           contentPath={`${BLOG_CONTENT_PATH}/index.md`}
           fallback={<p>Some ramblings on various topics, hope you enjoy!</p>}
         />
-        {posts && posts.length > 0 ? (
-          <PostList posts={posts} />
+        {sortedPosts && sortedPosts.length > 0 ? (
+          <PostList posts={sortedPosts} />
         ) : (
           <div className="error-message">
             <p>No blog posts found. Check back later!</p>

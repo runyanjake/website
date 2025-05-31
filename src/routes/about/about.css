@@ -1,3 +1,7 @@
+@import '../../../styles/markdown.css';
+
+/* Additional styles specific to the about page */
+
 .about-container {
   max-width: 800px;
   margin: 0 auto;
@@ -16,11 +20,6 @@
   padding: var(--spacing-xl);
   border-radius: var(--radius-md);
   box-shadow: 0 2px 4px var(--shadow-color);
-}
-
-.about-header h1 {
-  color: var(--text-dark);
-  margin-bottom: var(--spacing-md);
 }
 
 .about-content {
@@ -95,12 +94,6 @@
   color: var(--text-light);
 }
 
-.section-header h2 {
-  margin: 0;
-  font-size: var(--text-lg);
-  color: var(--text-dark);
-}
-
 .expand-icon {
   font-size: var(--text-sm);
   color: var(--text-muted);
@@ -157,42 +150,6 @@
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
-}
-
-.about-section-content h2 {
-  color: var(--text-dark);
-  margin-bottom: var(--spacing-md);
-}
-
-.about-section-content h3 {
-  font-size: 1.4rem;
-  color: var(--text-dark);
-  margin-top: var(--spacing-lg);
-  margin-bottom: var(--spacing-sm);
-}
-
-.about-section-content p {
-  margin-bottom: var(--spacing-md);
-}
-
-.about-section-content ul {
-  margin-bottom: var(--spacing-lg);
-  padding-left: var(--spacing-lg);
-}
-
-.about-section-content li {
-  margin-bottom: var(--spacing-sm);
-  line-height: var(--line-height-relaxed);
-}
-
-.about-section-content strong {
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.about-section-content em {
-  font-style: italic;
-  color: var(--text-muted);
 }
 
 .about-error {

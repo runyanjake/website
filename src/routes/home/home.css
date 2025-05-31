@@ -5,49 +5,6 @@
   text-align: center;
 }
 
-.home-container h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
-}
-
-.home-container h2 {
-  font-size: 1.8rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
-}
-
-.home-container p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-dark);
-  margin-bottom: 1rem;
-}
-
-.home-container ul {
-  margin-bottom: 1.5rem;
-  /* Make lists display properly with centered text */
-  display: inline-block;
-  text-align: left;
-}
-
-.home-container li {
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-  color: var(--text-dark);
-}
-
-.home-container a {
-  color: var(--text-muted);
-  text-decoration: none;
-}
-
-.home-container a:hover {
-  color: var(--text-link-hover);
-  text-decoration: underline;
-}
-
 .home-fallback {
   text-align: center;
   padding: 3rem 1rem;

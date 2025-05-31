@@ -1,6 +1,6 @@
 :root {
   /* Color System */
-  --color-primary: #323734;
+  --color-primary: #373632;
   --color-secondary: #1b3525;
   --shadow-color: #010703;
   --bg-primary: #96ba96;
@@ -12,6 +12,9 @@
   --text-muted: #666666;
   --text-link: var(--color-secondary);
   --text-link-hover: var(--color-primary);
+  --text-header: var(--color-primary);
+  --text-paragraph: var(--color-primary);
+  --text-accent: var(--color-secondary);
   
   /* Border Colors */
   --border-color-light: #eeeeee;

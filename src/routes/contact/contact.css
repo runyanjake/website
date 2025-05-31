@@ -1,3 +1,7 @@
+@import '../../../styles/markdown.css';
+
+/* Additional styles specific to the contact page */
+
 .contact-container {
   max-width: 800px;
   margin: 0 auto;
@@ -11,18 +15,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.contact-content h1 {
-  color: var(--text-dark);
-  margin-bottom: var(--spacing-md);
-  font-size: 2.25rem;
-}
-
-.contact-intro {
-  color: var(--text-dark);
-  margin-bottom: var(--spacing-xl);
-  line-height: var(--line-height-relaxed);
-}
-
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -33,11 +25,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-}
-
-.form-group label {
-  color: var(--text-dark);
-  font-weight: 500;
 }
 
 .form-group input,
