@@ -77,7 +77,7 @@ export default function Friends() {
   // Render the friends index
   return (
     <MainLayout>
-      <div className="friends-list-container">
+      <div className="friend-container">
         <h1>Friends</h1>
         <MarkdownRenderer
           contentPath={`${FRIENDS_CONTENT_PATH}/index.md`}

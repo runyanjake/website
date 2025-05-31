@@ -2,9 +2,11 @@
   /* Color System */
   --color-primary: #373632;
   --color-secondary: #1b3525;
+  --color-tertiary: #2a4d3a;
   --shadow-color: #010703;
   --bg-primary: #96ba96;
   --bg-secondary: #6ea16e;
+  --bg-tertiary: #6ea16e;
   
   /* Text Colors */
   --text-light: #ffffff;

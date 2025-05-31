@@ -16,6 +16,7 @@ export default function PostList({ posts }) {
           author={post.author}
           path={post.path}
           slug={post.slug}
+          fullView={true}
         />
       ))}
     </div>

@@ -1,31 +1,36 @@
-.friends-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
+.friend-container {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   padding: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.friend-link {
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s;
+.friends-grid {
+  margin-top: var(--spacing-xl);
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xl);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.friend-link:hover {
-  transform: translateY(-5px);
+.friends-grid > * {
+  margin-bottom: var(--spacing-xl);
+}
+
+.friends-grid > *:last-child {
+  margin-bottom: 0;
 }
 
 .friend-card {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
-  padding: var(--spacing-lg);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  transition: transform 0.2s ease;
-}
-
-.friend-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--shadow-color);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
 }
 
 .friend-card img {
@@ -34,6 +39,24 @@
   object-fit: cover;
   border-radius: var(--radius-sm);
   margin-bottom: var(--spacing-md);
+}
+
+.friend-card h2 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 2rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.friend-card a {
+  color: var(--text-link);
+  text-decoration: none;
+  margin-bottom: var(--spacing-md);
+}
+
+.friend-content {
+  margin-top: var(--spacing-md);
 }
 
 .friend-card .friend-links {
@@ -56,19 +79,18 @@
   text-decoration: none;
 }
 
-.friend-container, .friends-list-container {
-  padding: 2rem;
-}
-
 .friend-image-link {
   display: block;
   height: 100%;
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .friends-grid {
-    grid-template-columns: 1fr;
-    padding: var(--spacing-md);
+@media (max-width: 600px) {
+  .friend-card h2 {
+    font-size: 1.3rem;
+  }
+  
+  .friend-card {
+    padding: var(--spacing-lg);
   }
 } 
